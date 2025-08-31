@@ -11,6 +11,19 @@ export default class Player {
 
     constructor(public id: string, public name: string) {} 
 
+    receiveCard(card: Card): void {
+        if (this.hand.length >= 2) {
+            throw new Error(`${this.name} cannot receive more than 2 cards.`);  
+        }
+        this.hand.push(card);
+    }
+
+    muckCards(): Card[] {
+        const muckedCards = [...this.hand];
+        this.hand = []; // Clear hand
+        return muckedCards; // Return mucked cards
+    }
+
     check(): PlayerAction {
         if (this.isFolded) {
             throw new Error(`${this.name} has folded and cannot check.`);
